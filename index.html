@@ -238,7 +238,7 @@ function generarLinkWsp(numero, mensaje) {
 // --- FUNCIONES DE INICIO ---
 async function cargarNumeroWsp() {
   try {
-    const res = await fetch('/api/config');
+    const res = await fetch('/api/comprar-wsp');
     const data = await res.json();
     numeroDueña = data.wsp; 
 
