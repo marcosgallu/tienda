@@ -87,10 +87,8 @@ app.delete('/api/products/:id', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
-
 // ── ARRANCAR ──────────────────────────────────────────────────
-app.listen(3000, () => {
-  console.log('\n🛍  TIENDACAMI corriendo en → http://localhost:3000');
-  console.log('📦  Base de datos en       → catalogo.db');
-  console.log('📁  Carpeta del proyecto   →', __dirname, '\n');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`\n🛍  TIENDACAMI corriendo en el puerto ${PORT}`);
 });
