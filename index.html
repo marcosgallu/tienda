@@ -348,7 +348,9 @@ function comprarDirecto(nombre, precio) {
     return;
   }
   const mensaje = `¡Hola! Quiero consultar por: *${nombre}* — Precio: $${precio}`;
-  const url = `https://wa.me/${numeroDueña}?text=${encodeURIComponent(mensaje)}`;
+  // Usamos el link de la API oficial en vez de wa.me
+  const url = `https://api.whatsapp.com/send?phone=${numeroDueña}&text=${encodeURIComponent(mensaje)}`;
+  
   window.open(url, '_blank');
 }
 
