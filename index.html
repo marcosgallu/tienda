@@ -218,19 +218,33 @@
 let isAuthenticated = false;
 let db = { prods: [], favs: new Set() };
 let cf = 'Todo';
-let numeroDueña = ""; // Acá el HTML va a guardar el número del .env
+let numeroDueña = ""; 
+
+// --- DETECCIÓN INTELIGENTE (PC / CELULAR) ---
+function generarLinkWsp(numero, mensaje) {
+  // Detecta si es un dispositivo móvil
+  const esCelular = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const textoCodificado = encodeURIComponent(mensaje);
+  
+  if (esCelular) {
+    // Celulares: abre la app directamente
+    return `https://api.whatsapp.com/send?phone=${numero}&text=${textoCodificado}`;
+  } else {
+    // Computadoras: fuerza WhatsApp Web para evitar el bloqueo del navegador
+    return `https://web.whatsapp.com/send?phone=${numero}&text=${textoCodificado}`;
+  }
+}
 
 // --- FUNCIONES DE INICIO ---
 async function cargarNumeroWsp() {
   try {
-    const res = await fetch('https://ferrarisstyle.onrender.com/api/config');
+    const res = await fetch('/api/config');
     const data = await res.json();
     numeroDueña = data.wsp; 
 
     const btnFlotante = document.getElementById('btn-wsp-flotante');
     if (btnFlotante && numeroDueña) {
-      // Usamos el link de la API oficial en vez de wa.me
-      btnFlotante.href = `https://api.whatsapp.com/send?phone=${numeroDueña}&text=¡Hola!%20Tengo%20una%20consulta%20sobre%20la%20tienda.`;
+      btnFlotante.href = generarLinkWsp(numeroDueña, '¡Hola! Tengo una consulta sobre la tienda.');
     }
   } catch (error) {
     console.error("No se pudo cargar el número de WhatsApp");
@@ -239,7 +253,7 @@ async function cargarNumeroWsp() {
 
 async function cargarProductos() {
   try {
-    const res = await fetch('http://localhost:3000/api/products');
+    const res = await fetch('/api/products');
     db.prods = await res.json();
     render();
     if (isAuthenticated && document.getElementById('sc-admin').classList.contains('on')) {
@@ -277,7 +291,7 @@ function go(s) {
 async function checkLogin() {
   const claveIngresada = document.getElementById('pass-input').value;
   try {
-    const res = await fetch('http://localhost:3000/api/login', {
+    const res = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: claveIngresada }) 
@@ -341,16 +355,13 @@ function render() {
 function pickSz(el) { el.closest('.card-sizes').querySelectorAll('.sz').forEach(s => s.classList.remove('on')); el.classList.add('on'); }
 function togFav(id, e) { e.stopPropagation(); db.favs.has(id) ? db.favs.delete(id) : db.favs.add(id); render(); }
 
-// Ahora usa el número global seguro sin revelarlo en el código
 function comprarDirecto(nombre, precio) {
   if (!numeroDueña) {
     toast('⚠️ Cargando el número de contacto, intentá de nuevo en un segundo');
     return;
   }
   const mensaje = `¡Hola! Quiero consultar por: *${nombre}* — Precio: $${precio}`;
-  // Usamos el link de la API oficial en vez de wa.me
-  const url = `https://api.whatsapp.com/send?phone=${numeroDueña}&text=${encodeURIComponent(mensaje)}`;
-  
+  const url = generarLinkWsp(numeroDueña, mensaje);
   window.open(url, '_blank');
 }
 
@@ -410,7 +421,7 @@ function addProd() {
 
 async function guardarProductoFinal(n, cat, pr, old, imgData, sizes, col) {
   try {
-    const res = await fetch('http://localhost:3000/api/products', {
+    const res = await fetch('/api/products', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: n, cat, price: pr, oldPrice: old, img: imgData, sizes, color: col, badge: 'Nuevo' })
@@ -429,7 +440,7 @@ async function guardarProductoFinal(n, cat, pr, old, imgData, sizes, col) {
 
 async function delProd(id) {
   try {
-    await fetch(`http://localhost:3000/api/products/${id}`, { method: 'DELETE' });
+    await fetch(`/api/products/${id}`, { method: 'DELETE' });
     await cargarProductos(); 
     toast(`Producto eliminado`);
   } catch(e) {
