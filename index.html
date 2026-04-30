@@ -223,14 +223,14 @@ let numeroDueña = ""; // Acá el HTML va a guardar el número del .env
 // --- FUNCIONES DE INICIO ---
 async function cargarNumeroWsp() {
   try {
-    const res = await fetch('http://localhost:3000/api/config');
+    const res = await fetch('https://ferrarisstyle.onrender.com/api/config');
     const data = await res.json();
     numeroDueña = data.wsp; 
 
-    // Se le asigna el número dinámicamente al botón flotante
     const btnFlotante = document.getElementById('btn-wsp-flotante');
     if (btnFlotante && numeroDueña) {
-      btnFlotante.href = `https://wa.me/${numeroDueña}?text=¡Hola!%20Tengo%20una%20consulta%20sobre%20la%20tienda.`;
+      // Usamos el link de la API oficial en vez de wa.me
+      btnFlotante.href = `https://api.whatsapp.com/send?phone=${numeroDueña}&text=¡Hola!%20Tengo%20una%20consulta%20sobre%20la%20tienda.`;
     }
   } catch (error) {
     console.error("No se pudo cargar el número de WhatsApp");
