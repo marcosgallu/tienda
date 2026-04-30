@@ -1,0 +1,4 @@
+node_modules/
+.env
+tok.env
+catalogo.db
