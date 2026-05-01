@@ -42,13 +42,24 @@
   .srch input{width:100%;border:1px solid var(--border);background:var(--white);padding:9px 12px;font-size:12px;color:var(--black);outline:none;border-radius:2px;font-family:'Inter',sans-serif}
   .srch input:focus{border-color:var(--black)}
 
-  /* GRID */
+  /* GRID & CAROUSEL */
   .sec-title{font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:4px 14px 10px}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin:0 0 2px}
   .card{background:var(--white);padding:0;cursor:pointer;position:relative;transition:.15s}
   .card:hover{background:#FAFAFA}
-  .thumb{height:180px;display:flex;align-items:center;justify-content:center;font-size:58px;position:relative;border-bottom:1px solid var(--border);overflow:hidden;background:#F5F0EB}
-  .thumb img{width:100%;height:100%;object-fit:cover}
+  
+  /* Contenedor principal de la foto */
+  .thumb{height:220px;display:flex;align-items:center;justify-content:center;font-size:58px;position:relative;border-bottom:1px solid var(--border);overflow:hidden;background:#F5F0EB}
+  
+  /* Magia del Carrusel Deslizable */
+  .carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;width:100%;height:100%;-webkit-overflow-scrolling:touch}
+  .carousel::-webkit-scrollbar{display:none}
+  /* contain asegura que la foto se vea entera y no se corte */
+  .carousel img{flex:0 0 100%;width:100%;height:100%;object-fit:contain;scroll-snap-align:start;padding:8px}
+  
+  /* Cartelito que avisa que hay más fotos */
+  .swipe-hint{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.5);color:var(--white);font-size:8px;padding:3px 6px;border-radius:10px;pointer-events:none;z-index:2;letter-spacing:0.5px}
+
   .card-badge{position:absolute;top:10px;left:10px;background:var(--black);color:var(--white);font-size:8px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:3px 7px;z-index:2}
   .fav-t{position:absolute;top:8px;right:10px;background:none;border:none;font-size:16px;cursor:pointer;opacity:.4;transition:.2s;z-index:2;color:var(--black);text-shadow:0 0 4px rgba(255,255,255,0.8)}
   .fav-t.on,.fav-t:hover{opacity:1;color:red}
@@ -70,38 +81,7 @@
   .login-box p{font-size:11px;color:var(--muted);margin-bottom:20px}
   .login-box input{width:100%;max-width:240px;border:1px solid var(--border);padding:10px;font-size:12px;text-align:center;margin-bottom:10px;outline:none}
   .login-box button{background:var(--black);color:var(--white);border:none;padding:10px 20px;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
-/* --- ADAPTACIÓN PARA PANTALLAS GRANDES (COMPUTADORAS) --- */
-#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
-  /* BOTÓN FLOTANTE DE WHATSAPP */
-  .btn-wsp {
-    position: fixed;
-    /* ... (todo el código del botón de WhatsApp) ... */
-  }
-  .btn-wsp:hover { transform: scale(1.1); }
-  .btn-wsp svg { width: 30px; height: 30px; fill: white; }
-
-  /* --- ADAPTACIÓN PARA PANTALLAS GRANDES (COMPUTADORAS) --- */
-  @media (min-width: 768px) {
-    /* Magia para que el margen sea idéntico en los 4 lados */
-    .app { max-width: 1000px; width: calc(100% - 40px); margin: 20px auto; border-radius: 8px; }
-    .nav { border-radius: 8px 8px 0 0; }
-    
-    /* Emparejamos el padding interno a 20px */
-    .hdr { padding: 20px; }
-    .hero { padding: 60px 40px; margin: 20px; border-radius: 12px; text-align: center; }
-    .hero h2 { font-size: 42px; }
-    .hero::after { width: 400px; height: 400px; right: -100px; top: -150px; }
-    .filter-row { justify-content: center; margin-bottom: 10px; padding: 14px 20px 8px; }
-    .srch { padding: 10px 20px 2px; }
-    .sec-title { padding: 4px 20px 10px; }
-    .grid { grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 20px; background: var(--soft); }
-    .card { border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-    
-    .adm-block { max-width: 600px; margin: 0 auto; }
-    .stats { max-width: 600px; margin: 0 auto 20px; border-radius: 4px; overflow: hidden; }
-    .login-box { padding: 100px 20px; }
-  }
   /* ADMIN PANEL */
   .adm-top{background:var(--white);border-bottom:1px solid var(--border);padding:18px;display:flex;align-items:center;justify-content:space-between}
   .adm-top h2{font-family:'Playfair Display',serif;font-size:18px}
@@ -153,6 +133,24 @@
   }
   .btn-wsp:hover { transform: scale(1.1); }
   .btn-wsp svg { width: 30px; height: 30px; fill: white; }
+
+  /* --- ADAPTACIÓN PARA PANTALLAS GRANDES (COMPUTADORAS) --- */
+  @media (min-width: 768px) {
+    .app { max-width: 1000px; width: calc(100% - 40px); margin: 20px auto; border-radius: 8px; }
+    .nav { border-radius: 8px 8px 0 0; }
+    .hdr { padding: 20px; }
+    .hero { padding: 60px 40px; margin: 20px; border-radius: 12px; text-align: center; }
+    .hero h2 { font-size: 42px; }
+    .hero::after { width: 400px; height: 400px; right: -100px; top: -150px; }
+    .filter-row { justify-content: center; margin-bottom: 10px; padding: 14px 20px 8px; }
+    .srch { padding: 10px 20px 2px; }
+    .sec-title { padding: 4px 20px 10px; }
+    .grid { grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 20px; background: var(--soft); }
+    .card { border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .adm-block { max-width: 600px; margin: 0 auto; }
+    .stats { max-width: 600px; margin: 0 auto 20px; border-radius: 4px; overflow: hidden; }
+    .login-box { padding: 100px 20px; }
+  }
   </style>
 </head>
 <body>
@@ -166,7 +164,7 @@
 
   <div id="sc-shop" class="screen on">
     <div class="hdr">
-      <div class="brand">Ferrari Style</div>
+      <div class="brand">Maison</div>
     </div>
     <div class="hero">
       <div class="hero-label">Colección Otoño 2026</div>
@@ -178,6 +176,7 @@
       <button class="fc on" onclick="filt('Todo',this)">Todo</button>
       <button class="fc" onclick="filt('Mujer',this)">Mujer</button>
       <button class="fc" onclick="filt('Hombre',this)">Hombre</button>
+      <button class="fc" onclick="filt('Niños',this)">Niños</button>
       <button class="fc" onclick="filt('Accesorios',this)">Accesorios</button>
     </div>
     <div class="srch"><input id="srch" type="text" placeholder="Buscar productos..." oninput="render()"/></div>
@@ -213,12 +212,13 @@
         </div>
         <div class="f-2">
           <div class="f-row"><label>Categoría</label>
-            <select id="fcat"><option>Mujer</option><option>Hombre</option><option>Accesorios</option></select>
+            <select id="fcat"><option>Mujer</option><option>Hombre</option><option>Niños</option><option>Accesorios</option></select>
           </div>
-          <div class="f-row"><label>Foto del producto</label>
+          <div class="f-row"><label>Fotos del producto (podés elegir varias)</label>
             <div class="file-input-wrapper">
-              <span id="file-label" style="font-size:10px;letter-spacing:0.5px">📷 Subir foto...</span>
-              <input type="file" id="fimg" accept="image/*" onchange="updateFileLabel()">
+              <span id="file-label" style="font-size:10px;letter-spacing:0.5px">📷 Subir fotos...</span>
+              <!-- Agregamos "multiple" para que deje elegir más de una -->
+              <input type="file" id="fimg" accept="image/*" multiple onchange="updateFileLabel()">
             </div>
           </div>
         </div>
@@ -250,7 +250,7 @@ let db = { prods: [], favs: new Set() };
 let cf = 'Todo';
 
 // ¡PONÉ EL NÚMERO DE TELÉFONO ACÁ! (Con el código 549 y sin el +)
-let numeroDueña = "5491144017779"; 
+let numeroDueña = "5491123456789"; 
 
 // --- DETECCIÓN INTELIGENTE (PC / CELULAR) ---
 function generarLinkWsp(numero, mensaje) {
@@ -352,13 +352,30 @@ function render() {
     const f = db.favs.has(p.id);
     const sizesArray = Array.isArray(p.sizes) ? p.sizes : [];
     const szs = sizesArray.slice(0, 4).map((s, j) => `<div class="sz${j === 0 ? ' on' : ''}" onclick="pickSz(this)">${s}</div>`).join('');
-    const thumbContent = p.img ? `<img src="${p.img}" alt="${p.name}">` : `<span>${p.badge === 'Oferta' ? '👗' : '🛍️'}</span>`;
+    
+    // Lógica inteligente para las fotos (Carrusel)
+    let imgContent = `<span>${p.badge === 'Oferta' ? '👗' : '🛍️'}</span>`;
+    if (p.img) {
+      let images = [];
+      try {
+        images = JSON.parse(p.img);
+        if (!Array.isArray(images)) images = [p.img]; 
+      } catch(e) {
+        images = [p.img]; // Para las fotos viejas que subiste de a una
+      }
+      
+      if (images.length > 0) {
+        let cartelito = images.length > 1 ? `<div class="swipe-hint">➡️ Deslizá</div>` : '';
+        let imgsHtml = images.map(src => `<img src="${src}" alt="${p.name}">`).join('');
+        imgContent = `${cartelito}<div class="carousel">${imgsHtml}</div>`;
+      }
+    }
     
     return `<div class="card">
       <div class="thumb">
         ${p.badge ? `<div class="card-badge">${p.badge}</div>` : ''}
         <button class="fav-t${f ? ' on' : ''}" onclick="togFav(${p.id}, event)">${f ? '♥' : '♡'}</button>
-        ${thumbContent}
+        ${imgContent}
       </div>
       <div class="card-body">
         <div class="card-name">${p.name}</div>
@@ -392,11 +409,21 @@ function renderAdmin() {
   document.getElementById('st-p').textContent = db.prods.length;
   
   document.getElementById('inv').innerHTML = db.prods.map(p => {
-    const thumb = p.img ? `<img src="${p.img}">` : `<span>🛍️</span>`;
+    let primeraFoto = `<span>🛍️</span>`;
+    if (p.img) {
+      try {
+        let imgs = JSON.parse(p.img);
+        if (!Array.isArray(imgs)) imgs = [p.img];
+        primeraFoto = `<img src="${imgs[0]}">`;
+      } catch(e) {
+        primeraFoto = `<img src="${p.img}">`;
+      }
+    }
+
     const sizesArray = Array.isArray(p.sizes) ? p.sizes : [];
     return `
     <div class="inv-item">
-      <div class="inv-em">${thumb}</div>
+      <div class="inv-em">${primeraFoto}</div>
       <div style="flex:1;min-width:0">
         <div class="inv-name">${p.name}</div>
         <div class="inv-meta">${p.cat} · ${sizesArray.join(', ')}</div>
@@ -410,14 +437,18 @@ function renderAdmin() {
 function updateFileLabel() {
   const fileInput = document.getElementById('fimg');
   const label = document.getElementById('file-label');
-  if (fileInput.files && fileInput.files[0]) {
-    label.textContent = "✓ " + fileInput.files[0].name.substring(0, 15) + "...";
+  if (fileInput.files && fileInput.files.length > 0) {
+    const cant = fileInput.files.length;
+    label.textContent = `✓ ${cant} foto${cant > 1 ? 's' : ''}`;
     label.style.color = "var(--black)";
     label.style.fontWeight = "bold";
+  } else {
+    label.textContent = '📷 Subir fotos...';
+    label.style.fontWeight = "normal";
   }
 }
 
-function addProd() {
+async function addProd() {
   const n = document.getElementById('fn').value.trim();
   const pr = parseFloat(document.getElementById('fp').value);
   if (!n || !pr) { toast('Completá nombre y precio'); return; }
@@ -429,15 +460,28 @@ function addProd() {
   const sizes = sz ? sz.split(',').map(s => s.trim()).filter(Boolean) : ['S', 'M', 'L'];
   const fileInput = document.getElementById('fimg');
   
-  if (fileInput.files && fileInput.files[0]) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      guardarProductoFinal(n, cat, pr, old, e.target.result, sizes, col);
-    };
-    reader.readAsDataURL(fileInput.files[0]);
-  } else {
-    guardarProductoFinal(n, cat, pr, old, null, sizes, col);
+  let imgData = null;
+
+  if (fileInput.files && fileInput.files.length > 0) {
+    toast('⏳ Procesando fotos...');
+    try {
+      // Leemos todas las fotos seleccionadas al mismo tiempo
+      const promesas = Array.from(fileInput.files).map(file => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve(e.target.result);
+          reader.readAsDataURL(file);
+        });
+      });
+      const arrayBase64 = await Promise.all(promesas);
+      imgData = JSON.stringify(arrayBase64); // Las empaquetamos juntas
+    } catch (e) {
+      toast('⚠️ Error al leer las imágenes');
+      return;
+    }
   }
+  
+  guardarProductoFinal(n, cat, pr, old, imgData, sizes, col);
 }
 
 async function guardarProductoFinal(n, cat, pr, old, imgData, sizes, col) {
@@ -449,7 +493,7 @@ async function guardarProductoFinal(n, cat, pr, old, imgData, sizes, col) {
     });
     if (res.ok) {
       ['fn', 'fp', 'fo', 'fimg', 'fs', 'fc2'].forEach(id => document.getElementById(id).value = '');
-      document.getElementById('file-label').textContent = '📷 Subir foto...';
+      document.getElementById('file-label').textContent = '📷 Subir fotos...';
       document.getElementById('file-label').style.fontWeight = "normal";
       await cargarProductos(); 
       toast(`"${n}" agregado`);
