@@ -71,15 +71,33 @@
   .login-box input{width:100%;max-width:240px;border:1px solid var(--border);padding:10px;font-size:12px;text-align:center;margin-bottom:10px;outline:none}
   .login-box button{background:var(--black);color:var(--white);border:none;padding:10px 20px;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
 /* --- ADAPTACIÓN PARA PANTALLAS GRANDES (COMPUTADORAS) --- */
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* BOTÓN FLOTANTE DE WHATSAPP */
+  .btn-wsp {
+    position: fixed;
+    /* ... (todo el código del botón de WhatsApp) ... */
+  }
+  .btn-wsp:hover { transform: scale(1.1); }
+  .btn-wsp svg { width: 30px; height: 30px; fill: white; }
+
+  /* --- ADAPTACIÓN PARA PANTALLAS GRANDES (COMPUTADORAS) --- */
   @media (min-width: 768px) {
-    .app { max-width: 1000px; border-radius: 8px; margin-top: 20px; margin-bottom: 20px; }
+    /* Magia para que el margen sea idéntico en los 4 lados */
+    .app { max-width: 1000px; width: calc(100% - 40px); margin: 20px auto; border-radius: 8px; }
     .nav { border-radius: 8px 8px 0 0; }
-    .grid { grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 20px; background: var(--soft); }
-    .card { border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-    .hero { padding: 80px 40px; margin: 20px; border-radius: 12px; text-align: center; }
+    
+    /* Emparejamos el padding interno a 20px */
+    .hdr { padding: 20px; }
+    .hero { padding: 60px 40px; margin: 20px; border-radius: 12px; text-align: center; }
     .hero h2 { font-size: 42px; }
     .hero::after { width: 400px; height: 400px; right: -100px; top: -150px; }
-    .filter-row { justify-content: center; margin-bottom: 10px; }
+    .filter-row { justify-content: center; margin-bottom: 10px; padding: 14px 20px 8px; }
+    .srch { padding: 10px 20px 2px; }
+    .sec-title { padding: 4px 20px 10px; }
+    .grid { grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 20px; background: var(--soft); }
+    .card { border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    
     .adm-block { max-width: 600px; margin: 0 auto; }
     .stats { max-width: 600px; margin: 0 auto 20px; border-radius: 4px; overflow: hidden; }
     .login-box { padding: 100px 20px; }
