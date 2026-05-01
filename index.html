@@ -218,36 +218,27 @@
 let isAuthenticated = false;
 let db = { prods: [], favs: new Set() };
 let cf = 'Todo';
-let numeroDueña = ""; 
+
+// ¡PONÉ EL NÚMERO DE TELÉFONO ACÁ! (Con el código 549 y sin el +)
+let numeroDueña = "5491144017779"; 
 
 // --- DETECCIÓN INTELIGENTE (PC / CELULAR) ---
 function generarLinkWsp(numero, mensaje) {
-  // Detecta si es un dispositivo móvil
   const esCelular = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const textoCodificado = encodeURIComponent(mensaje);
   
   if (esCelular) {
-    // Celulares: abre la app directamente
     return `https://api.whatsapp.com/send?phone=${numero}&text=${textoCodificado}`;
   } else {
-    // Computadoras: fuerza WhatsApp Web para evitar el bloqueo del navegador
     return `https://web.whatsapp.com/send?phone=${numero}&text=${textoCodificado}`;
   }
 }
 
 // --- FUNCIONES DE INICIO ---
-async function cargarNumeroWsp() {
-  try {
-    const res = await fetch('/api/comprar-wsp');
-    const data = await res.json();
-    numeroDueña = data.wsp; 
-
-    const btnFlotante = document.getElementById('btn-wsp-flotante');
-    if (btnFlotante && numeroDueña) {
-      btnFlotante.href = generarLinkWsp(numeroDueña, '¡Hola! Tengo una consulta sobre la tienda.');
-    }
-  } catch (error) {
-    console.error("No se pudo cargar el número de WhatsApp");
+function cargarNumeroWsp() {
+  const btnFlotante = document.getElementById('btn-wsp-flotante');
+  if (btnFlotante && numeroDueña) {
+    btnFlotante.href = generarLinkWsp(numeroDueña, '¡Hola! Tengo una consulta sobre la tienda.');
   }
 }
 
@@ -357,7 +348,7 @@ function togFav(id, e) { e.stopPropagation(); db.favs.has(id) ? db.favs.delete(i
 
 function comprarDirecto(nombre, precio) {
   if (!numeroDueña) {
-    toast('⚠️ Cargando el número de contacto, intentá de nuevo en un segundo');
+    toast('⚠️ Falta configurar el número de WhatsApp');
     return;
   }
   const mensaje = `¡Hola! Quiero consultar por: *${nombre}* — Precio: $${precio}`;
